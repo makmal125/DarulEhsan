@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         children: [
           titleSection,
           MarqueeWidget,
-          _booksTitle("Maqalat-e-Hikmat")
+          _booksTitle("MAQALAT-E-HIKMAT")
         ],
       ),
       // floatingActionButton: FloatingActionButton(

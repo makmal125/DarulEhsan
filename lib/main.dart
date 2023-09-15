@@ -1,7 +1,14 @@
 import 'dart:async';
+import 'package:darulehsan/home/books_title_more_1.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 
+const rowDivider = SizedBox(width: 20);
+const colDivider = SizedBox(height: 10);
+const tinySpacing = 3.0;
+const smallSpacing = 10.0;
+const double cardWidth = 115;
+const double widthConstraint = 450;
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,12 +42,20 @@ class _MyAppState extends State<MyApp> {
   // ignore: non_constant_identifier_names
   Scaffold bottom_bar() {
     return Scaffold(
-      body: Column(
-        children: [
-          titleSection,
-          MarqueeWidget,
-          _booksTitle("MAQALAT-E-HIKMAT")
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            titleSection,
+            MarqueeWidget,
+            _booksTitle('مقا لا تِ حکمت'),
+            makalatBooksList('Read_Makalat_', 31),
+            colDivider,
+            _booksTitle("ترتیب شریف"),
+            makalatBooksList('Read_Tarteeb_', 6),
+            colDivider,
+          ],
+        ),
+//_booksgrid()
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: _pushAddTodoScreen,
@@ -57,6 +72,7 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: IconButton(
                 icon: const Icon(Icons.book_online_rounded),
+                // ignore: avoid_print
                 onPressed: () => print('hello fareed'),
               ),
             ),
@@ -64,6 +80,7 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: IconButton(
                 icon: const Icon(Icons.settings_applications),
+                // ignore: avoid_print
                 onPressed: () => print('hello world'),
               ),
             ),
@@ -74,6 +91,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  // ignore: unused_element
   void _pushAddTodoScreen() {
     // ignore: avoid_print
     print("hello floating");
@@ -159,30 +177,60 @@ class _MyAppState extends State<MyApp> {
   // ignore: non_constant_identifier_names
   _booksTitle(title) {
     // ignore: avoid_unnecessary_containers
-    return Container(
-      //padding: const EdgeInsets.all(8.0),
-      margin: const EdgeInsets.only(top: 20, left: 1, right: 10),
-      child: Text(
-                title,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  //decoration:TextDecoration.underline,
-                  height: 2,
-                  //leadingDistribution: TextLeadingDistribution.even,
-                  fontFamily: "Agane55",
-                  color: Colors.black,
-                  shadows: [
-                    Shadow(
-                      color: Colors.amber,
-                    ),
-                    Shadow(
-                      color: Colors.greenAccent,
-                    )
-                  ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        alignment: Alignment.bottomRight,
+        padding: const EdgeInsets.all(18.0),
+        margin: const EdgeInsets.only(top: 20, left: 10),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Text(
+            title,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              //decoration:TextDecoration.underline,
+              height: 2,
+              //leadingDistribution: TextLeadingDistribution.even,
+              fontFamily: "AlBayan",
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  color: Colors.amber,
                 ),
-              ),
+                Shadow(
+                  color: Colors.greenAccent,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  // ignore: unused_element
+  _booksgrid() {
+    return SizedBox(
+                  height: 1050,
+                  child: GridView.count(
+                    primary: false,
+                    physics: const ScrollPhysics(),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 4,
+                    children: List.generate(
+                      222,
+                      (index) => Container(
+                        color: Colors.red,
+                        width: 200,
+                        height: 200,
+                        child: Text(" $index"),
+                      ),
+                    ),
+                  ),
+                );
   }
 }

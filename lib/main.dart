@@ -6,6 +6,7 @@ import 'package:darulehsan/home/other_books.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:marquee/marquee.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 const rowDivider = SizedBox(width: 20);
 const sliverColDivider = SizedBox(height: 10);
@@ -15,7 +16,7 @@ const double cardWidth = 115;
 const double widthConstraint = 450;
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Supabase.initialize(url: 'https://dsngponqkfiomhhdlhgv.supabase.co', anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzbmdwb25xa2Zpb21oaGRsaGd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTUzMDM4NTgsImV4cCI6MjAxMDg3OTg1OH0.EwRd3vTPhIOCytV3Rm5aJYN7oKYloZ--bDsPEY3gJF4');
   runApp(const MaterialApp(
     home: MyApp(),
     debugShowCheckedModeBanner: false,
@@ -33,8 +34,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  User? user;
   @override
   void initState() {
+    _getAuth();
     super.initState();
   }
 
@@ -42,7 +45,16 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
   }
-
+Future<void> _getAuth() async {
+    setState(() {
+      user = Supabase.instance.client.auth.currentUser;
+    });
+    Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+      setState(() {
+        user = data.session?.user;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return bottom_bar();
@@ -77,10 +89,10 @@ class _MyAppState extends State<MyApp> {
         TitleSection(),
         MarqueeWidget(),
         booksTitle('مقا لا تِ حکمت'),
-        makalatBooksList('Read_Makalat_', 31),
+        makalatBooksList('Read_Makalat_', 31, 'مقا لا تِ حکمت'),
         sliverDivider(),
         booksTitle("ترتیب شریف"),
-        makalatBooksList('Read_Tarteeb_', 6),
+        makalatBooksList('Read_Tarteeb_', 6, "ترتیب شریف"),
         sliverDivider(),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {

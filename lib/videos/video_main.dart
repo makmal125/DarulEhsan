@@ -136,6 +136,7 @@ class _YoutubeHomeScreenState extends State<YoutubeHomeScreen> {
               image: NetworkImage(video.thumbnailUrl),
             ),
             const SizedBox(width: 10.0),
+            // ignore: sized_box_for_whitespace
             Container(
               width: MediaQuery.of(context).size.width * 0.40,
               child: Column(

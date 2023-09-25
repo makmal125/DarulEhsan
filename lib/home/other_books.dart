@@ -115,3 +115,4 @@ _openDetail(context, chapter, bookId) {
           builder: (context) =>
               BookPageView(chapter: chapter, bookId: bookId)));
 }
+

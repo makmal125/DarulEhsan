@@ -4,7 +4,7 @@ import 'package:darulehsan/home/book_pages_view.dart';
 import 'package:darulehsan/home/photo_hero.dart';
 import 'package:flutter/material.dart';
 
-const url = "http://darulehsan.pk";
+const url = "http://www.darulehsan132.com";
 const suburl = "assets/img";
 // ignore: unused_element
 

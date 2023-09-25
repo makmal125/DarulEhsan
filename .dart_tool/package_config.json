@@ -15,13 +15,13 @@
     },
     {
       "name": "app_links",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/app_links-3.4.3",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/app_links-3.4.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "archive",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/archive-3.3.9",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/archive-3.4.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -57,21 +57,21 @@
     },
     {
       "name": "cached_network_image",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/cached_network_image-3.2.3",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/cached_network_image-3.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_platform_interface",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-2.0.0",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-3.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_web",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/cached_network_image_web-1.0.2",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/cached_network_image_web-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "characters",
@@ -156,12 +156,6 @@
       "rootUri": "file:///Users/akmalahmed/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.0"
-    },
-    {
-      "name": "flutter_blurhash",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/flutter_blurhash-0.7.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.15"
     },
     {
       "name": "flutter_cache_manager",
@@ -327,7 +321,7 @@
     },
     {
       "name": "octo_image",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/octo_image-1.0.2",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/octo_image-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -429,7 +423,7 @@
     },
     {
       "name": "realtime_client",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/realtime_client-1.2.2",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/realtime_client-1.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -567,13 +561,13 @@
     },
     {
       "name": "supabase",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/supabase-1.11.5",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/supabase-1.11.6",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "supabase_flutter",
-      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/supabase_flutter-1.10.18",
+      "rootUri": "file:///Users/akmalahmed/.pub-cache/hosted/pub.dev/supabase_flutter-1.10.19",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -758,7 +752,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-09-25T02:58:11.945853Z",
+  "generated": "2023-09-25T20:58:16.178501Z",
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }

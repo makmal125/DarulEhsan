@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 // ignore: must_be_immutable
-class VideoScreen extends StatefulWidget {
+class YoutubeVideoPlayer extends StatefulWidget {
   String id;
   String title;
   String description;
 
-  VideoScreen(
+  YoutubeVideoPlayer(
       {super.key,
       required this.id,
       required this.title,
@@ -16,12 +17,12 @@ class VideoScreen extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _VideoScreenState createState() =>
+  _YoutubeVideoPlayerState createState() =>
       // ignore: no_logic_in_create_state
-      _VideoScreenState();
+      _YoutubeVideoPlayerState();
 }
 
-class _VideoScreenState extends State<VideoScreen> {
+class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   late YoutubePlayerController _controller;
   bool _fullScreen = false;
 
@@ -31,9 +32,7 @@ class _VideoScreenState extends State<VideoScreen> {
     _controller = YoutubePlayerController(
       initialVideoId: widget.id,
       flags: const YoutubePlayerFlags(
-        mute: false,
-        autoPlay: true,
-      ),
+          mute: false, autoPlay: true, hideControls: false),
     )..addListener(listener);
   }
 
@@ -47,7 +46,9 @@ class _VideoScreenState extends State<VideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _fullScreen
-          ? null
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+            )
           : AppBar(
               title: const Text('YouTube Video'),
               backgroundColor: const Color.fromRGBO(255, 0, 0, 1),
@@ -57,14 +58,22 @@ class _VideoScreenState extends State<VideoScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-              onReady: () {
-                if (kDebugMode) {
-                  print('Player is ready.');
-                }
-              },
+            Container(
+              child: YoutubePlayerBuilder(
+                  player: YoutubePlayer(
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                    onReady: () {
+                      if (kDebugMode) {
+                        print('Player is ready.');
+                      }
+                    },
+                  ),
+                  builder: (context, player) {
+                    return Container(
+                      child: player,
+                    );
+                  }),
             ),
             const SizedBox(
               height: 20,

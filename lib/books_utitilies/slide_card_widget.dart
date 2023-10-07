@@ -18,6 +18,7 @@ class SlideCard extends StatelessWidget {
               wantKeepAlive: true,
               imageProvider: CachedNetworkImageProvider(
                 cardImage,
+                            
               ),
               backgroundDecoration: const BoxDecoration(color: Colors.white),
               loadingBuilder: (context, event) => Center(

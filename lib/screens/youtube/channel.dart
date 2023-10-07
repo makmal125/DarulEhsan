@@ -2,7 +2,7 @@ import 'package:darulehsan/models/channel_model.dart';
 import 'package:darulehsan/models/video_model.dart';
 import 'package:darulehsan/services/youtube_api_service.dart';
 import 'package:darulehsan/utilities/keys.dart';
-import 'package:darulehsan/videos/video_screen.dart';
+import 'package:darulehsan/screens/youtube/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -66,7 +66,7 @@ class _YoutubeHomeScreenState extends State<YoutubeHomeScreen> {
                   _channel.title,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 20.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -75,7 +75,7 @@ class _YoutubeHomeScreenState extends State<YoutubeHomeScreen> {
                   '${_channel.subscriberCount} subscribers',
                   style: const TextStyle(
                     color: Colors.white60,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.w600,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -92,7 +92,7 @@ class _YoutubeHomeScreenState extends State<YoutubeHomeScreen> {
                       'Subscribe',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -112,7 +112,7 @@ class _YoutubeHomeScreenState extends State<YoutubeHomeScreen> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => VideoScreen(id: video.id, title: video.title, description: video.description,),
+          builder: (_) => YoutubeVideoPlayer(id: video.id, title: video.title, description: video.description,),
         ),
       ),
       child: Container(
@@ -150,15 +150,24 @@ class _YoutubeHomeScreenState extends State<YoutubeHomeScreen> {
                           color: Colors.white,
                           fontSize: 14.0,
                         ),
+                        textAlign: TextAlign.justify,
                       ),
                     ),
                   ),
-                  Text(
-                    video.publishedAtAgo,
-                    style: const TextStyle(
-                      color: Colors.white60,
-                      fontSize: 18.0,
-                    ),
+                  Row(
+                    children: [
+                      const Icon(FontAwesomeIcons.clock, size: 12,color: Colors.white60,),
+                      const Padding(padding: EdgeInsets.only(right: 10)),
+                      Text(
+                        video.publishedAtAgo,
+                        style: const TextStyle(
+                          color: Colors.white60,
+                          fontSize: 12.0,
+                          
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
                   ),
                 ],
               ),

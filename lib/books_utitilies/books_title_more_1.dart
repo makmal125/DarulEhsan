@@ -48,6 +48,7 @@ makalatBooksList(bookName, totalChapters, bookTitle, bookStream) {
                     margin: const EdgeInsets.all(5),
                     width: 150,
                     child: PhotoHero(
+                      
                       // ignore: prefer_interpolation_to_compose_strings
                       photo: '${'$DOMAIN_URL/$SUB_URL/' + bookName}$index.jpg',
                       width: 150.0,

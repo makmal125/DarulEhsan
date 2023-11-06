@@ -1,6 +1,5 @@
 import 'package:darulehsan/screens/books/book_pages_view.dart';
 import 'package:darulehsan/books_utitilies/photo_hero.dart';
-import 'package:darulehsan/screens/more/taqwim/taqwim_pages_view.dart';
 import 'package:darulehsan/utilities/keys.dart';
 import 'package:flutter/material.dart';
 
@@ -135,11 +134,11 @@ _openDetail(context, chapter, bookId, bookStream) {
   );
 }
 
-_openTaqwim(context) {
-  return Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const TaqwimPageViewScreen(),
-    ),
-  );
-}
+// _openTaqwim(context) {
+//   return Navigator.push(
+//     context,
+//     MaterialPageRoute(
+//       builder: (context) => const TaqwimPageViewScreen(),
+//     ),
+//   );
+// }

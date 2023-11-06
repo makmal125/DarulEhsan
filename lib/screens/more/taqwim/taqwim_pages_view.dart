@@ -1,12 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darulehsan/books_utitilies/slide_card_widget.dart';
 import 'package:darulehsan/services/get_taqwim_urls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,7 +26,7 @@ class _TaqwimPageViewScreenState extends State<TaqwimPageViewScreen>
   List<String> bytes = [];
   int chapter = 0;
   int bookId = 0;
-  String bookNameUr = 'Taqwim';
+  String bookNameUr = 'دارُلاحسان';
   // ignore: non_constant_identifier_names
   bool hasFocus = false;
   FocusNode focus = FocusNode();
@@ -65,10 +61,11 @@ class _TaqwimPageViewScreenState extends State<TaqwimPageViewScreen>
   void initState() {
     downloadPDFFile();
     super.initState();
-    
+
     _getCurrentPage('BookId=$bookId&Chapter=$chapter');
     _getScrollPages('BookId=$bookId&Chapter=$chapter&Pages');
     _getTotalPages('BookId=$bookId&Chapter=$chapter&TotalPages');
+
     focus.addListener(() {
       onFocusChange();
     });
@@ -141,209 +138,210 @@ class _TaqwimPageViewScreenState extends State<TaqwimPageViewScreen>
   Future<void> downloadPDFFile() async {
     final response = await getTaqwimUrls();
     setState(() {
-      
       bytes = response;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
-        backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
-        title: Text(bookNameUr),
-        centerTitle: true,
-      ),
-      floatingActionButton: Wrap(
-        children: [
-          //share page
-          Visibility(
-            visible: isPageNumberVisible,
-            child: Container(
-              padding: const EdgeInsets.only(top: 12),
-              child: Visibility(
-                visible: isVisibleDown,
-                child: FloatingActionButton(
-                  onPressed: () async {
-                    final result = await Share.shareWithResult(sharePage);
-
-                    if (result.status == ShareResultStatus.success) {
-                      SnackBar snackbar = const SnackBar(
-                        backgroundColor: Colors.black,
-                        elevation: 0,
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        content: Text(
-                          "Thank you for sharing!",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        duration: Duration(seconds: 3),
-                      );
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      print('Thank you for sharing my website!');
-                    }
-                  },
-                  //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
-                  backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
-                  child: const Icon(
-                    Icons.share,
-                    color: Colors.white,
-                  ),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
+          backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
+          title: Text(bookNameUr),
+          centerTitle: true,
+        ),
+        floatingActionButton: Wrap(
+          children: [
+            
+            //page number search
+            Container(
+              margin: const EdgeInsets.fromLTRB(10, 17, 10, 10),
+              width: 140,
+              height: 50,
+              child: Material(
+                elevation: 5,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
                 ),
-              ),
-            ),
-          ),
-          //page number search
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 17, 10, 10),
-            width: 140,
-            height: 50,
-            child: Material(
-              elevation: 5,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-              ),
-              child: TextField(
-                focusNode: focus,
-                onChanged: (value) {
-                  setState(() {
+                child: TextField(
+                  focusNode: focus,
+                  onChanged: (value) {
                     setState(() {
-                      if (value.isNotEmpty) {
-                        int goPage = int.parse(value);
-                        if (goPage > 0) {
-                          goPage = goPage - 1;
-                          pageViewController.animateToPage(goPage,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.ease);
+                      setState(() {
+                        if (value.isNotEmpty) {
+                          int goPage = int.parse(value);
+                          if (goPage > 0) {
+                            goPage = goPage - 1;
+                            pageViewController.animateToPage(goPage,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.ease);
+                          }
                         }
-                      }
+                      });
                     });
-                  });
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                decoration: const InputDecoration(
-                  hintText: "Page No",
-                  label: Text("Page No"),
-                  labelStyle: TextStyle(
-                      //color: Color.fromRGBO(248, 147, 0, 1), fontSize: 14),
-                      color:  Color.fromRGBO(2, 67, 4, 1), fontSize: 14),
-                  filled: false, //<-- SEE HERE
-                  //fillColor: Color.fromRGBO(248, 147, 0, 1),
-                  fillColor:  Color.fromRGBO(2, 67, 4, 1),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                      //color: Color.fromRGBO(248, 147, 0, 1),
-                      color:  Color.fromRGBO(2, 67, 4, 1)
+                  },
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: const InputDecoration(
+                    hintText: "صفحہ نمبر",
+                    label: Text("صفحہ نمبر"),
+                    labelStyle: TextStyle(
+                        //color: Color.fromRGBO(248, 147, 0, 1), fontSize: 14),
+                        color: Color.fromRGBO(2, 67, 4, 1),
+                        fontSize: 14),
+                    filled: false, //<-- SEE HERE
+                    //fillColor: Color.fromRGBO(248, 147, 0, 1),
+                    fillColor: Color.fromRGBO(2, 67, 4, 1),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      borderSide: BorderSide(
+                          //color: Color.fromRGBO(248, 147, 0, 1),
+                          color: Color.fromRGBO(2, 67, 4, 1)),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+            //share page
+            Visibility(
+              visible: isPageNumberVisible,
+              child: Container(
+                padding: const EdgeInsets.only(top: 12),
+                child: Visibility(
+                  visible: isVisibleDown,
+                  child: FloatingActionButton(
+                    onPressed: () async {
+                      final result = await Share.shareWithResult(sharePage);
 
-          //down page
-          Container(
-            padding: const EdgeInsets.only(top: 12),
-            child: Visibility(
-              visible: isVisibleDown,
-              child: FloatingActionButton(
-                onPressed: () {
-                  if (pageViewController.hasClients) {
-                    pageViewController.animateToPage(totalPages,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease);
-                  }
-                },
-                //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
-                backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
-                child: const Icon(
-                  Icons.arrow_downward,
-                  color: Colors.white,
+                      if (result.status == ShareResultStatus.success) {
+                        SnackBar snackbar = const SnackBar(
+                          backgroundColor: Colors.black,
+                          elevation: 0,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          content: Text(
+                            "Thank you for sharing!",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          duration: Duration(seconds: 3),
+                        );
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                      }
+                    },
+                    //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
+                    backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
+                    child: const Icon(
+                      Icons.share,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          //top page
-          Container(
-            padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
-            child: Visibility(
-              visible: isVisibleTop,
-              child: FloatingActionButton(
-                onPressed: () {
-                  if (pageViewController.hasClients) {
-                    pageViewController.animateToPage(0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut);
-                  }
-                },
-                //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
-                backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
-                child: const Icon(
-                  Icons.arrow_upward,
-                  color: Colors.white,
+            //top page
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
+              child: Visibility(
+                visible: isVisibleTop,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    if (pageViewController.hasClients) {
+                      pageViewController.animateToPage(0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut);
+                    }
+                  },
+                  //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
+                  backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
+                  child: const Icon(
+                    Icons.arrow_upward,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            PageView(
-              children: [
-                bookPagesBuilder(pageViewController),
-              ],
-            ),
-            Visibility(
-              visible: isPageNumberVisible,
-              maintainAnimation: true,
-              maintainState: true,
-              child: AlignTransition(
-                alignment: _animation,
-                child: Align(
-                  alignment: const AlignmentDirectional(1, -1),
-                  child: Container(
-                      width: 140,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        color: const Color.fromARGB(255, 49, 46, 46),
-                        borderRadius: const BorderRadius.horizontal(
-                            left: Radius.elliptical(50, 50)),
-                      )),
-                ),
-              ),
-            ),
-            Visibility(
-              visible: isPageNumberVisible,
-              maintainAnimation: true,
-              maintainState: true,
-              child: Align(
-                alignment: const AlignmentDirectional(0.89, -0.98),
-                child: Text(
-                  currentPageLabel,
-                  textAlign: TextAlign.justify,
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
+            //down page
+            Container(
+              padding: const EdgeInsets.only(top: 12),
+              child: Visibility(
+                visible: isVisibleDown,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    if (pageViewController.hasClients) {
+                      pageViewController.animateToPage(totalPages,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.ease);
+                    }
+                  },
+                  //backgroundColor: const Color.fromRGBO(248, 147, 0, 1),
+                  backgroundColor: const Color.fromRGBO(2, 67, 4, 1),
+                  child: const Icon(
+                    Icons.arrow_downward,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ],
         ),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              PageView(
+                children: [
+                  bookPagesBuilder(pageViewController),
+                ],
+              ),
+              Visibility(
+                visible: isPageNumberVisible,
+                maintainAnimation: true,
+                maintainState: true,
+                child: AlignTransition(
+                  alignment: _animation,
+                  child: Align(
+                    alignment: const AlignmentDirectional(1, -1),
+                    child: Container(
+                        width: 140,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          color: const Color.fromARGB(255, 49, 46, 46),
+                          borderRadius: const BorderRadius.horizontal(
+                              right: Radius.elliptical(50, 50)),
+                        )),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: isPageNumberVisible,
+                maintainAnimation: true,
+                maintainState: true,
+                child: Align(
+                  alignment: const AlignmentDirectional(0.89, -0.98),
+                  child: Text(
+                    currentPageLabel,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget bookPagesBuilder(controller) {
+  PageView bookPagesBuilder(controller) {
     // ignore: unused_local_variable
 
     // Return your widget with the data from the snapshot
@@ -352,20 +350,21 @@ class _TaqwimPageViewScreenState extends State<TaqwimPageViewScreen>
       var dbChapter = 1;
       var dbBookId = bookNameUr;
       _incrementCounter('BookId=$bookId&Chapter=$chapter&Pages', dbPages);
+      _incrementCounter('BookId=$bookId&Chapter=$chapter&TotalPages', dbPages);
       List<Widget> items = [];
-      for (String item in bytes) {
+      for (int i = 0; i < bytes.length; i++) {
         // ignore: prefer_typing_uninitialized_variables
         var width;
         items.add(SizedBox(
           width: width,
           child: Hero(
-            tag: item,
+            tag: i == 0 ? 'taqwim' : "t_$i",
             child: Material(
               color: Colors.transparent,
               child: InkWell(
                   onTap: () => {},
                   child: CachedNetworkImage(
-                    imageUrl: item,
+                    imageUrl: bytes[i],
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -402,8 +401,10 @@ class _TaqwimPageViewScreenState extends State<TaqwimPageViewScreen>
             currentPageLabel = '$value / $dPages';
           });
           if (value == 1) {
+            bookNameUr = "دارُلاحسان";
             isPageNumberVisible = false;
           } else {
+            bookNameUr = "تقویمِ دارُلاحسان";
             isPageNumberVisible = true;
             sharePage = bytes[value];
           }
@@ -417,6 +418,6 @@ class _TaqwimPageViewScreenState extends State<TaqwimPageViewScreen>
         },
       );
     }
-    return const Center(child: CircularProgressIndicator());
+    return PageView(children: const [CircularProgressIndicator()]);
   }
 }

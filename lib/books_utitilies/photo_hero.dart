@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darulehsan/utilities/load_swiper_images.dart';
 import 'package:flutter/material.dart';
 
 class PhotoHero extends StatelessWidget {
@@ -25,6 +24,7 @@ class PhotoHero extends StatelessWidget {
             //ServerLocalImage(baseUrl: photo,)
              CachedNetworkImage(
                  imageUrl: photo,
+                 cacheKey: photo,
                  imageBuilder: (context, imageProvider) => Container(
                    decoration: BoxDecoration(
                      image: DecorationImage(

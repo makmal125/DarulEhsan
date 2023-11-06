@@ -12,7 +12,6 @@ class DuainMainScreen extends StatefulWidget {
   _DuainMainScreen createState() => _DuainMainScreen();
   }
 class _DuainMainScreen extends State<DuainMainScreen>{
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   @override
   void initState() {
     super.initState();
@@ -21,7 +20,7 @@ class _DuainMainScreen extends State<DuainMainScreen>{
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(title: Text('Duain'),),
+      appBar: AppBar(title: const Text('Duain'),),
       body: ListView(
             padding: const EdgeInsets.all(8.0),
               children: <Widget>[

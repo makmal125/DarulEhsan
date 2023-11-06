@@ -22,17 +22,17 @@ class HomePageMarquee extends StatelessWidget {
               height: 40,
               child: Marquee(
                 text:
-                    '.الهم صلي علي سيدنا محمد النبي الامي و علي اله و اصحابه و عترته بعدد كل معلوم لك و استغفرالله الذي لا اله الا هو الحي القيوم و اتوب اليه يا حي يا قيوم',
+                    'الهم صلي علي سيدنا محمد النبي الامي و علي اله و اصحابه و عترته بعدد كل معلوم لك و استغفرالله الذي لا اله الا هو الحي القيوم و اتوب اليه يا حي يا قيوم',
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.green),
                 scrollAxis: Axis.horizontal,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                textDirection: TextDirection.rtl,
+                textDirection: TextDirection.ltr,
                 blankSpace: 400.0,
                 velocity: 50.0,
-                pauseAfterRound: const Duration(seconds: 1),
+                pauseAfterRound: const Duration(microseconds: 1),
                 startPadding: 20.0,
                 accelerationDuration: const Duration(seconds: 1),
                 accelerationCurve: Curves.linear,

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 // ignore: must_be_immutable
@@ -44,22 +43,24 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _fullScreen
-          ? AppBar(
-              backgroundColor: Colors.transparent,
-            )
-          : AppBar(
-              title: const Text('YouTube Video'),
-              backgroundColor: const Color.fromRGBO(255, 0, 0, 1),
-            ),
-      backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              child: YoutubePlayerBuilder(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: _fullScreen
+            ? AppBar(
+                backgroundColor: Colors.transparent,
+              )
+            : AppBar(
+                title: const Text('یو ٹیوب ویڈیو'),
+                backgroundColor: const Color.fromRGBO(255, 0, 0, 1),
+                centerTitle: true,
+              ),
+        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              YoutubePlayerBuilder(
                   player: YoutubePlayer(
                     controller: _controller,
                     showVideoProgressIndicator: true,
@@ -74,34 +75,34 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
                       child: player,
                     );
                   }),
-            ),
-            const SizedBox(
-              height: 20,
-              width: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                widget.title,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
+              const SizedBox(
+                height: 20,
+                width: 30,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 3, 20, 20),
-              child: Text(
-                widget.description,
-                style: const TextStyle(
-                  color: Colors.white60,
-                  fontSize: 14.0,
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  widget.title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
                 ),
-                textAlign: TextAlign.left,
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 3, 20, 20),
+                child: Text(
+                  widget.description,
+                  style: const TextStyle(
+                    color: Colors.white60,
+                    fontSize: 14.0,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

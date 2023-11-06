@@ -13,11 +13,13 @@ class SlideCard extends StatelessWidget {
          
         Expanded(
           child: PhotoView(
+            heroAttributes: PhotoViewHeroAttributes(tag: cardImage),
               minScale: PhotoViewComputedScale.contained * 0.8,
               maxScale: PhotoViewComputedScale.covered * 2,
               wantKeepAlive: true,
               imageProvider: CachedNetworkImageProvider(
                 cardImage,
+                cacheKey: cardImage
                             
               ),
               backgroundDecoration: const BoxDecoration(color: Colors.white),

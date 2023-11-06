@@ -23,7 +23,6 @@ class HomeAppBarSwiper extends StatelessWidget {
       'http://www.darulehsan132.com/assets/img/portfolio/Thumbs/1-36.jpg',
       'http://www.darulehsan132.com/assets/img/portfolio/Thumbs/4-01.jpg',
       'http://www.darulehsan132.com/assets/img/portfolio/Thumbs/4-02.jpg',
-      'https://dsngponqkfiomhhdlhgv.supabase.co/storage/v1/object/public/aditionalBooks/Taqwim_page-0006.jpg?t=2023-10-04T02%3A12%3A53.141Z'
     ];
     
     return Swiper(
@@ -32,7 +31,7 @@ class HomeAppBarSwiper extends StatelessWidget {
        return SwiperServerLocalImage(baseUrl:images[index]);
       },
       
-      autoplay: false,
+      autoplay: true,
     );
   }
 }

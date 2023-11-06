@@ -1,7 +1,9 @@
 // ignore_for_file: unnecessary_new
 
 import 'dart:async';
-import 'dart:io';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:darulehsan/connection_status.dart';
 import 'package:darulehsan/customer_animation_bottom_bar.dart';
 import 'package:darulehsan/screens/books/books_screen.dart';
 import 'package:darulehsan/screens/home/home_screen.dart';
@@ -9,9 +11,10 @@ import 'package:darulehsan/screens/more/more_screen.dart';
 import 'package:darulehsan/utilities/keys.dart';
 import 'package:darulehsan/screens/youtube/channel.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 const rowDivider = SizedBox(width: 20);
 const sliverColDivider = SizedBox(height: 10);
@@ -19,17 +22,30 @@ const tinySpacing = 3.0;
 const smallSpacing = 10.0;
 const double cardWidth = 115;
 const double widthConstraint = 450;
-late Directory appDocsDir;
 Future main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_API_KEY);
-  appDocsDir = await getApplicationDocumentsDirectory();
-  runApp(const MaterialApp(
-    home: MyApp(),
-    debugShowCheckedModeBanner: false,
+  runApp(Directionality(
+    textDirection: TextDirection.rtl,
+    child: MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Nastaliq',
+      ),
+      home: AnimatedSplashScreen(
+        duration: 1500,
+        splashIconSize: 300,
+        splash: Image.asset(
+          'images/splash.png',
+          width: 400,
+        ),
+        nextScreen: const MyApp(),
+        splashTransition: SplashTransition.scaleTransition,
+        pageTransitionType: PageTransitionType.bottomToTop,
+        backgroundColor: Colors.white,
+      ),
+      debugShowCheckedModeBanner: false,
+    ),
   ));
-  
 }
 
 class MyApp extends StatefulWidget {
@@ -47,13 +63,16 @@ class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
   // ignore: non_constant_identifier_names
   Color _bottom_bar_color = Colors.white;
-
+  
   final _inactiveColor = const Color.fromARGB(255, 123, 122, 122);
   @override
   void initState() {
     _getAuth();
     super.initState();
+    
   }
+
+  
 
   @override
   void dispose() {
@@ -70,26 +89,28 @@ class _MyAppState extends State<MyApp> {
       });
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    print(user?.email);
+  
     return bottom_bar();
   }
 
   // ignore: non_constant_identifier_names
-  Scaffold bottom_bar() {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: getBody(),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _pushAddTodoScreen,
-      //   tooltip: 'Increment',
-      //   elevation: 8.0,
-      //   child: const Icon(Icons.add),
-      // ),
-      bottomNavigationBar: _buildBottomBar(),
-      //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+  Directionality bottom_bar() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: getBody(),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: _pushAddTodoScreen,
+        //   tooltip: 'Increment',
+        //   elevation: 8.0,
+        //   child: const Icon(Icons.add),
+        // ),
+        bottomNavigationBar: _buildBottomBar(),
+        //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
     );
   }
 
@@ -138,7 +159,7 @@ class _MyAppState extends State<MyApp> {
         BottomNavyBarItem(
           icon: const Icon(FontAwesomeIcons.houseUser),
           title: const Text(
-            'Home',
+            'مرکز',
           ),
           //activeColor: const Color.fromRGBO(127, 130, 213, 1),
           activeColor: const Color.fromRGBO(124, 127, 208, 1),
@@ -148,7 +169,7 @@ class _MyAppState extends State<MyApp> {
         BottomNavyBarItem(
           icon: const Icon(FontAwesomeIcons.bookOpenReader),
           title: const Text(
-            'Books',
+            'کتابیں',
           ),
           activeColor: const Color.fromRGBO(248, 147, 0, 1),
           inactiveColor: _inactiveColor,
@@ -157,7 +178,7 @@ class _MyAppState extends State<MyApp> {
         BottomNavyBarItem(
           icon: const Icon(FontAwesomeIcons.youtube),
           title: const Text(
-            'Videos',
+            'ویڈیوز',
           ),
           activeColor: const Color.fromRGBO(255, 0, 0, 1),
           inactiveColor: _inactiveColor,
@@ -166,7 +187,7 @@ class _MyAppState extends State<MyApp> {
         BottomNavyBarItem(
           icon: const Icon(Icons.apps),
           title: const Text(
-            'More',
+            'مزید',
           ),
           activeColor: Colors.green,
           inactiveColor: _inactiveColor,
